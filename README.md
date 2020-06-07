@@ -1,1 +1,3 @@
-# ansible-role-journalmd
+# Ansible Role: JournalMd
+
+Installs and configures JournalMd.
