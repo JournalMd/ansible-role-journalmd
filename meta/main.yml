@@ -1,0 +1,33 @@
+galaxy_info:
+  author: Sebastian Pech
+  description: JournalMd Web and Server installation
+  company: JournalMd
+  license: "license (BSD, MIT)"
+  min_ansible_version: 2.9
+  platforms:
+    - name: Debian
+      versions:
+        - all
+    - name: Ubuntu
+      versions:
+        - xenial
+        - bionic
+        - disco
+        - cosmic
+        - focal
+        - groovy
+  galaxy_tags:
+    - web
+    - database
+    - server
+    - client
+    - ubuntu
+    - daily
+
+dependencies:
+    - geerlingguy.mysql
+    - geerlingguy.nodejs
+    - geerlingguy.nginx
+    - ocha.yarn
+    - ocha.dotnet-core
+ 
