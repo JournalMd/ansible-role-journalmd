@@ -7,8 +7,7 @@ Role Variables
 --------------
 
 ```yaml
-# server domain
-journalmd_web_domain: 0.0.0.0
+x
 ```
 
 Dependencies config
@@ -47,9 +46,18 @@ nginx_remove_default_vhost: true
 nginx_server_tokens: "off"
 nginx_vhosts:
   - listen: "80"
-    server_name: "{{ journalmd_web_domain }}"
-    return: "301 https://$server_name$request_uri"
-    filename: "journalmd.80.conf"
+    server_name: "{{ journalmd_web_server_name }}"
+    filename: "journalmd_clientweb.80.conf"
+    extra_parameters: |
+      location / {
+        root   "{{journalmd_clientweb_dir}}/dist";
+        index  index.html;
+        try_files $uri $uri/ /index.html;
+      }
+      error_page   500 502 503 504  /50x.html;
+      location = /50x.html {
+        root   /usr/share/nginx/html;
+      }
 ```
 
 Dependencies

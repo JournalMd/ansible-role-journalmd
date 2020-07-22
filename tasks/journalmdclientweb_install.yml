@@ -1,0 +1,16 @@
+---
+# https://cli.vuejs.org/guide/deployment.html
+
+- git:
+    repo: https://github.com/JournalMd/JournalMdClientWeb.git
+    dest: "{{journalmd_clientweb_dir}}"
+
+- name: yarn install
+  command: /usr/bin/yarn install
+  args:
+    chdir: "{{journalmd_clientweb_dir}}"
+
+- name: yarn build
+  command: /usr/bin/yarn build
+  args:
+    chdir: "{{journalmd_clientweb_dir}}"

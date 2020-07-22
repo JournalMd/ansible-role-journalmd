@@ -19,6 +19,6 @@
   include_role:
     name: geerlingguy.nginx
 
-- include: copy_code.yml
 - include: mysql_create.yml
-- include: journalmd_install.yml
+- include: journalmdserver_install.yml
+- include: journalmdclientweb_install.yml
