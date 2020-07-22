@@ -1,0 +1,28 @@
+---
+- name: Install MySQL Client
+  apt:
+    name=mysql-client
+    state=present
+
+- name: Create database '{{ mysql_databases[0].name }}'
+  mysql_db:
+    name: "{{ mysql_databases[0].name }}"
+    state: present
+    login_host: "{{ valuedesk_web_mysqlhost }}"
+    login_port: "{{ mysql_port }}"
+    login_user: "{{ mysql_root_username }}"
+    login_password: "{{ mysql_root_password }}"
+    encoding: "{{ mysql_databases[0].encoding }}"
+    collation: "{{ mysql_databases[0].collation }}"
+  
+- name: Create database User '{{ mysql_users[0].name }}'
+  mysql_user:
+    login_host: "{{ valuedesk_web_mysqlhost }}"
+    login_port: "{{ mysql_port }}"
+    login_user: "{{ mysql_root_username }}"
+    login_password: "{{ mysql_root_password }}"
+    name: "{{ mysql_users[0].name }}"
+    password: "{{ mysql_users[0].password }}"
+    priv: "{{ mysql_users[0].priv }}"
+    host: "{{ mysql_users[0].host }}"
+    state: present

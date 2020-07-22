@@ -1,2 +1,24 @@
 ---
-# tasks file for ansible-role-journalmd
+- name: Run geerlingguy.mysql role.
+  include_role:
+    name: geerlingguy.mysql
+
+- name: Run geerlingguy.nodejs role.
+  include_role:
+    name: geerlingguy.nodejs
+
+- name: Run ocha.yarn role.
+  include_role:
+    name: ocha.yarn
+
+- name: Run ocha.dotnet-core role.
+  include_role:
+    name: ocha.dotnet-core
+
+- name: Run geerlingguy.nginx role.
+  include_role:
+    name: geerlingguy.nginx
+
+- include: copy_code.yml
+- include: mysql_create.yml
+- include: journalmd_install.yml
