@@ -7,7 +7,38 @@ Role Variables
 --------------
 
 ```yaml
-x
+################################################################################
+# General
+################################################################################
+# instance/service name (journalmd, journalmd-test, ...)
+journalmd_name: journalmd
+
+# web server domain
+journalmd_web_server_name: 0.0.0.0
+
+################################################################################
+# ClientWeb
+################################################################################
+# install clientweb?
+journalmd_clientweb_install: yes
+
+# clientweb root dir
+journalmd_clientweb_dir: /var/www/journalmd-clientweb
+
+################################################################################
+# Server
+################################################################################
+# install server?
+journalmd_server_install: yes
+
+# server root dir
+journalmd_server_dir: /var/www/journalmd-server
+
+# secret for encryption
+journalmd_server_secret: CHANGEME
+
+# mysql server or hostname
+journalmd_mysql_server: localhost
 ```
 
 Dependencies config
@@ -58,6 +89,20 @@ nginx_vhosts:
       location = /50x.html {
         root   /usr/share/nginx/html;
       }
+  - listen: "8500"
+    server_name: "{{ journalmd_web_server_name }}"
+    filename: "journalmd_server.8500.conf"
+    extra_parameters: |
+      location / {
+          proxy_pass         http://localhost:5000;
+          proxy_http_version 1.1;
+          proxy_set_header   Upgrade $http_upgrade;
+          proxy_set_header   Connection keep-alive;
+          proxy_set_header   Host $host;
+          proxy_cache_bypass $http_upgrade;
+          proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header   X-Forwarded-Proto $scheme;
+      }
 ```
 
 Dependencies
@@ -91,3 +136,8 @@ License
 -------
 
 MIT
+
+ToDo
+----
+
+- Improve secret handling for server

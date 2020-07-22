@@ -8,7 +8,7 @@
   mysql_db:
     name: "{{ mysql_databases[0].name }}"
     state: present
-    login_host: "{{ valuedesk_web_mysqlhost }}"
+    login_host: "{{ journalmd_mysql_server }}"
     login_port: "{{ mysql_port }}"
     login_user: "{{ mysql_root_username }}"
     login_password: "{{ mysql_root_password }}"
@@ -17,7 +17,7 @@
   
 - name: Create database User '{{ mysql_users[0].name }}'
   mysql_user:
-    login_host: "{{ valuedesk_web_mysqlhost }}"
+    login_host: "{{ journalmd_mysql_server }}"
     login_port: "{{ mysql_port }}"
     login_user: "{{ mysql_root_username }}"
     login_password: "{{ mysql_root_password }}"

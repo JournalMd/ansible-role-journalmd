@@ -1,0 +1,18 @@
+{
+  "AppSettings": {
+    "Secret": "{{ journalmd_server_secret }}",
+    "DbType": "mysql"
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft": "Warning",
+      "Microsoft.Hosting.Lifetime": "Information"
+    }
+  },
+  "ConnectionStrings": {
+    "mssqlDatabase": "Server=(localdb)\\mssqllocaldb;Database=JournalMd;Trusted_Connection=True;",
+    "mysqlDatabase": "Server={{ journalmd_mysql_server }};Database={{ mysql_databases[0].name }};Port={{ mysql_port }};User={{ mysql_users[0].name }};Password={{ mysql_users[0].password }};",
+    "sqliteDatabase": "Data Source=journalmd.db"
+  }
+}

@@ -1,0 +1,16 @@
+[Unit]
+Description=JournalMD App Instance {{ journalmd_name }}
+
+[Service]
+WorkingDirectory={{journalmd_server_dir}}/out
+ExecStart=/usr/bin/dotnet {{journalmd_server_dir}}/out/JournalMdServer.dll
+Restart=always
+RestartSec=30
+KillSignal=SIGINT
+SyslogIdentifier={{ journalmd_name }}
+User=www-data
+Environment=ASPNETCORE_ENVIRONMENT=Production
+Environment=DOTNET_PRINT_TELEMETRY_MESSAGE=false
+
+[Install]
+WantedBy=multi-user.target

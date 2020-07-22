@@ -2,23 +2,32 @@
 - name: Run geerlingguy.mysql role.
   include_role:
     name: geerlingguy.mysql
-
-- name: Run geerlingguy.nodejs role.
-  include_role:
-    name: geerlingguy.nodejs
-
-- name: Run ocha.yarn role.
-  include_role:
-    name: ocha.yarn
+  when: journalmd_server_install|bool
 
 - name: Run ocha.dotnet-core role.
   include_role:
     name: ocha.dotnet-core
+  when: journalmd_server_install|bool
+
+- name: Run geerlingguy.nodejs role.
+  include_role:
+    name: geerlingguy.nodejs
+  when: journalmd_clientweb_install|bool
+
+- name: Run ocha.yarn role.
+  include_role:
+    name: ocha.yarn
+  when: journalmd_clientweb_install|bool
 
 - name: Run geerlingguy.nginx role.
   include_role:
     name: geerlingguy.nginx
 
 - include: mysql_create.yml
+  when: journalmd_server_install|bool
+
 - include: journalmdserver_install.yml
+  when: journalmd_server_install|bool
+
 - include: journalmdclientweb_install.yml
+  when: journalmd_clientweb_install|bool

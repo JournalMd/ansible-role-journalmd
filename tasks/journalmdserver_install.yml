@@ -5,25 +5,48 @@
     repo: https://github.com/JournalMd/JournalMdServer.git
     dest: "{{journalmd_server_dir}}"
 
-# Docker Server
-# # build stage
-# # https://hub.docker.com/_/microsoft-dotnet-core
-# FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
-# WORKDIR /app
 
-# # copy csproj and restore as distinct layers
-# COPY *.sln .
-# COPY *.csproj ./
-# RUN dotnet restore JournalMd.sln
+- name: dotnet restore
+  command: dotnet restore JournalMd.sln
+  args:
+    chdir: "{{journalmd_server_dir}}"
 
-# # copy everything else and build app
-# COPY . ./
-# # RUN dotnet publish JournalMd.sln -c Release -o out --no-restore
-# RUN dotnet publish JournalMd.sln -c Release -o out
+- name: dotnet restore
+  command: dotnet publish JournalMd.sln --configuration Release -o out
+  args:
+    chdir: "{{journalmd_server_dir}}"
 
-# # final stage/image
-# FROM mcr.microsoft.com/dotnet/core/aspnet:3.1
-# WORKDIR /app
-# COPY --from=build /app/out .
-# ENTRYPOINT ["dotnet", "JournalMdServer.dll"]
 
+- name: Create appsettings config file
+  template:
+    src: templates/appsettings.Production.json.j2
+    dest: "{{journalmd_server_dir}}/out/appsettings.Production.json"
+    owner: root
+    group: root
+    mode: 0644
+
+
+- name: Make sure service is stopped
+  systemd:
+    state: stopped
+    name: "{{ journalmd_name }}"
+  ignore_errors: yes
+
+- name: "service killall"
+  shell: killall {{ journalmd_name }}
+  ignore_errors: yes
+
+- name: Create service file
+  template:
+    src: templates/journalmd.service.j2
+    dest: /etc/systemd/system/{{ journalmd_name }}.service
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Make sure service is started
+  systemd:
+    state: started
+    enabled: yes
+    name: "{{ journalmd_name }}"
+  ignore_errors: yes
