@@ -14,7 +14,7 @@ Role Variables
 journalmd_name: journalmd
 
 # web server domain
-journalmd_web_server_name: 0.0.0.0
+journalmd_web_server_name: 192.168.10.10 # my.journal-md.com
 
 # API url
 journalmd_clientweb_api_location: http://{{journalmd_web_server_name}}:8500/
