@@ -1,6 +1,14 @@
 ---
 # https://docs.microsoft.com/de-de/aspnet/core/host-and-deploy/linux-nginx?view=aspnetcore-3.1
 
+- name: Create directory
+  file:
+    path: "{{journalmd_server_dir}}"
+    state: directory
+    owner: www-data
+    group: www-data
+    mode: 0775
+
 - git:
     repo: https://github.com/JournalMd/JournalMdServer.git
     dest: "{{journalmd_server_dir}}"
@@ -17,7 +25,7 @@
 - name: Create appsettings config file
   template:
     src: templates/appsettings.Production.json.j2
-    dest: "{{journalmd_server_dir}}/out/appsettings.Production.json"
+    dest: "{{journalmd_server_dir}}/appsettings.Production.json"
     owner: root
     group: root
     mode: 0644
@@ -28,14 +36,14 @@
   args:
     chdir: "{{journalmd_server_dir}}"
   environment:
-    ASPNETCORE_ENVIRONMENT=Production
+    ASPNETCORE_ENVIRONMENT: Production
 
 - name: dotnet publish
   command: dotnet publish JournalMd.sln --configuration Release -o out
   args:
     chdir: "{{journalmd_server_dir}}"
   environment:
-    ASPNETCORE_ENVIRONMENT=Production
+    ASPNETCORE_ENVIRONMENT: Production
 
 
 - name: dotnet ef database update
@@ -43,7 +51,7 @@
   args:
     chdir: "{{journalmd_server_dir}}"
   environment:
-    ASPNETCORE_ENVIRONMENT=Production
+    ASPNETCORE_ENVIRONMENT: Production
 
 
 - name: Make sure service is stopped
