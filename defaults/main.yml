@@ -34,7 +34,7 @@ journalmd_server_secret: CHANGEME
 # TODO: Change to secret handler https://docs.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-3.1&tabs=linux
 
 # mysql server or hostname
-journalmd_mysql_server: localhost
+journalmd_mysql_server: 127.0.0.1
 
 ################################################################################
 # Dependencies

@@ -41,7 +41,7 @@ journalmd_server_dir: /var/www/journalmd-server
 journalmd_server_secret: CHANGEME
 
 # mysql server or hostname
-journalmd_mysql_server: localhost
+journalmd_mysql_server: 127.0.0.1
 ```
 
 Dependencies config
@@ -130,7 +130,7 @@ Example Playbook
 
 The role name can be changed with named import in `requirements.yml`. 
 
-```
+```yaml
 - name: "journalmd"
   src: "https://github.com/JournalMd/ansible-role-journalmd.git"
 ```
