@@ -6,15 +6,12 @@
     dest: "{{journalmd_server_dir}}"
 
 
-- name: dotnet restore
-  command: dotnet restore JournalMd.sln
-  args:
-    chdir: "{{journalmd_server_dir}}"
-
-- name: dotnet restore
-  command: dotnet publish JournalMd.sln --configuration Release -o out
-  args:
-    chdir: "{{journalmd_server_dir}}"
+# BUG? Sometimes 3.x is missing?!
+- name: Install dotnet core (again?)
+  apt:
+    name: "{{ dotnet_package }}"
+    state: present
+    update_cache: yes
 
 
 - name: Create appsettings config file
@@ -24,6 +21,29 @@
     owner: root
     group: root
     mode: 0644
+
+
+- name: dotnet restore
+  command: dotnet restore JournalMd.sln
+  args:
+    chdir: "{{journalmd_server_dir}}"
+  environment:
+    ASPNETCORE_ENVIRONMENT=Production
+
+- name: dotnet publish
+  command: dotnet publish JournalMd.sln --configuration Release -o out
+  args:
+    chdir: "{{journalmd_server_dir}}"
+  environment:
+    ASPNETCORE_ENVIRONMENT=Production
+
+
+- name: dotnet ef database update
+  command: dotnet ef database update
+  args:
+    chdir: "{{journalmd_server_dir}}"
+  environment:
+    ASPNETCORE_ENVIRONMENT=Production
 
 
 - name: Make sure service is stopped
