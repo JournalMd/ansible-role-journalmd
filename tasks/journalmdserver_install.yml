@@ -46,8 +46,19 @@
     ASPNETCORE_ENVIRONMENT: Production
 
 
+- name: check if rules file exists
+  stat: 
+    path: /root/.dotnet/tools/dotnet-ef
+  register: dotnetef_bin
+
+- name: install dotnet-ef
+  command: dotnet tool install --global dotnet-ef
+  args:
+    chdir: "{{journalmd_server_dir}}"
+  when: dotnetef_bin.stat.exists == false
+    
 - name: dotnet ef database update
-  command: dotnet ef database update
+  command: /root/.dotnet/tools/dotnet-ef database update
   args:
     chdir: "{{journalmd_server_dir}}"
   environment:
