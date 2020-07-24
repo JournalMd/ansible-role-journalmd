@@ -25,9 +25,7 @@ galaxy_info:
     - daily
 
 dependencies:
-    - geerlingguy.mysql
-    - geerlingguy.nodejs
-    - geerlingguy.nginx
-    - ocha.yarn
-    - ocha.dotnet-core
+  - { role: geerlingguy.nodejs, nodejs_version: "12.x", nodejs_npm_global_packages: [ { name: vue-cli }, { name: tsc } ] }
+  - { role: ocha.yarn }
+  - { role: ocha.dotnet-core, dotnet_package: "dotnet-sdk-3.1" }
  

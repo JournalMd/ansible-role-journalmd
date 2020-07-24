@@ -16,9 +16,6 @@ journalmd_name: journalmd
 # web server domain
 journalmd_web_server_name: 192.168.10.10 # my.journal-md.com
 
-# API url
-journalmd_clientweb_api_location: http://{{journalmd_web_server_name}}:8500/
-
 ################################################################################
 # ClientWeb
 ################################################################################
@@ -27,6 +24,9 @@ journalmd_clientweb_install: yes
 
 # clientweb root dir
 journalmd_clientweb_dir: /var/www/journalmd-clientweb
+
+# API url
+journalmd_clientweb_api_location: http://{{journalmd_web_server_name}}:8500/api/
 
 ################################################################################
 # Server
@@ -40,11 +40,14 @@ journalmd_server_dir: /var/www/journalmd-server
 # secret for encryption
 journalmd_server_secret: CHANGEME
 
+# ASPNETCORE_URLS must be used in the nginx config!
+journalmd_server_aspnetcore_urls: https://localhost:5001;http://localhost:5000
+
 # mysql server or hostname
 journalmd_mysql_server: 127.0.0.1
 ```
 
-Dependencies config
+Example dependencies config
 
 ```yaml
 # geerlingguy.mysql
@@ -111,29 +114,16 @@ nginx_vhosts:
 Dependencies
 ------------
 
-- geerlingguy.mysql
-- geerlingguy.nodejs
-- geerlingguy.nginx
-- ocha.yarn
-- ocha.dotnet-core
+- mysql 5+
+- nodejs 12+
+- nginx
+- yarn
+- dotnet-core 3.x
 
 Example Playbook
 ----------------
 
-```yaml
-    - name: JournalMd installation
-      hosts: servers
-      become: true
-      roles:
-        - ansible-role-journalmd
-```
-
-The role name can be changed with named import in `requirements.yml`. 
-
-```yaml
-- name: "journalmd"
-  src: "https://github.com/JournalMd/ansible-role-journalmd.git"
-```
+[JournalMdInfrastructure](https://github.com/JournalMd/JournalMdInfrastructure)
 
 License
 -------

@@ -1,6 +1,7 @@
 ---
 # https://docs.microsoft.com/de-de/aspnet/core/host-and-deploy/linux-nginx?view=aspnetcore-3.1
 
+# Git
 - name: Create directory
   file:
     path: "{{journalmd_server_dir}}"
@@ -14,15 +15,7 @@
     dest: "{{journalmd_server_dir}}"
     force: yes
 
-
-# BUG? Sometimes 3.x is missing?!
-- name: Install dotnet core (again?)
-  apt:
-    name: "{{ dotnet_package }}"
-    state: present
-    update_cache: yes
-
-
+# Config
 - name: Create appsettings config file
   template:
     src: templates/appsettings.Production.json.j2
@@ -31,7 +24,7 @@
     group: root
     mode: 0644
 
-
+# Build
 - name: dotnet restore
   command: dotnet restore JournalMd.sln
   args:
@@ -46,7 +39,7 @@
   environment:
     ASPNETCORE_ENVIRONMENT: Production
 
-
+# DB
 - name: check if rules file exists
   stat: 
     path: /root/.dotnet/tools/dotnet-ef
@@ -65,7 +58,7 @@
   environment:
     ASPNETCORE_ENVIRONMENT: Production
 
-
+# Service
 - name: Make sure service is stopped
   systemd:
     state: stopped

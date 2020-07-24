@@ -10,6 +10,7 @@ KillSignal=SIGINT
 SyslogIdentifier={{ journalmd_name }}
 User=www-data
 Environment=ASPNETCORE_ENVIRONMENT=Production
+Environment=ASPNETCORE_URLS={{ journalmd_server_aspnetcore_urls }}
 Environment=DOTNET_PRINT_TELEMETRY_MESSAGE=false
 
 [Install]

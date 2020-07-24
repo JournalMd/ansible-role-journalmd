@@ -1,6 +1,7 @@
 ---
 # https://cli.vuejs.org/guide/deployment.html
 
+# Git
 - name: Create directory
   file:
     path: "{{journalmd_clientweb_dir}}"
@@ -14,7 +15,7 @@
     dest: "{{journalmd_clientweb_dir}}"
     force: yes
 
-
+# Config
 - name: Create env config file
   template:
     src: templates/env.j2
@@ -23,6 +24,7 @@
     group: root
     mode: 0644
 
+# Build
 - name: yarn install
   command: /usr/bin/yarn install
   args:
