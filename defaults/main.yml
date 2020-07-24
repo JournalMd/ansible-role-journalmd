@@ -18,7 +18,7 @@ journalmd_clientweb_install: yes
 journalmd_clientweb_dir: /var/www/journalmd-clientweb
 
 # API url
-journalmd_clientweb_api_location: http://{{journalmd_web_server_name}}:8500/
+journalmd_clientweb_api_location: http://{{journalmd_web_server_name}}:8500/api/
 
 ################################################################################
 # Server
