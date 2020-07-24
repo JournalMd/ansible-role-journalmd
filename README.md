@@ -51,10 +51,10 @@ Example dependencies config
 
 ```yaml
 # geerlingguy.mysql
-#mysql_port: "3306"
-#mysql_root_username: root
-#mysql_root_password_update: no
-#mysql_root_password: CHANGEMEjmdtest
+mysql_port: "3306"
+mysql_root_username: root
+mysql_root_password_update: no
+mysql_root_password: CHANGEMEjmdtest
 mysql_databases:
   - name: journalmd
     encoding: utf8mb4
