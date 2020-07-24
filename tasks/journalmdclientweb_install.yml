@@ -12,6 +12,7 @@
 - git:
     repo: https://github.com/JournalMd/JournalMdClientWeb.git
     dest: "{{journalmd_clientweb_dir}}"
+    force: yes
 
 
 - name: Create env config file

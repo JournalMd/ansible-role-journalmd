@@ -12,6 +12,7 @@
 - git:
     repo: https://github.com/JournalMd/JournalMdServer.git
     dest: "{{journalmd_server_dir}}"
+    force: yes
 
 
 # BUG? Sometimes 3.x is missing?!
